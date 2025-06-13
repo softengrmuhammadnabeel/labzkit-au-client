@@ -1,5 +1,7 @@
-import { getAllOffers } from "../api/offer.js";
 import React, { useEffect, useState } from "react";
+import { FaFacebookF, FaInstagram } from "react-icons/fa";
+import { FiPhone, FiMail } from "react-icons/fi";
+import { getAllOffers } from "../api/offer";
 
 const BannerOffer = () => {
   const [offers, setOffers] = useState([]);
@@ -22,7 +24,7 @@ const BannerOffer = () => {
 
     const interval = setInterval(() => {
       setCurrentIndex((prevIndex) => (prevIndex + 1) % offers.length);
-    }, 3000);
+    }, 4000); // 4-second rotation
 
     return () => clearInterval(interval);
   }, [offers]);
@@ -30,31 +32,41 @@ const BannerOffer = () => {
   const currentOffer = offers.length > 0 ? offers[currentIndex] : null;
 
   return (
-    <div className="w-full  mx-auto bg-orange-100 rounded-sm shadow-md border border-gray-200 overflow-hidden">
-      <div className="flex items-center justify-between px-6 py-4 space-x-6">
-        {/* Left */}
-        <div className="flex items-center space-x-3 min-w-[150px]">
-          
-          <span className="text-gray-800 font-semibold text-lg">LabzKit.com</span>
+    <div className="w-full  bg-[#1F1F1F] text-white text-sm px-4 py-4 flex flex-wrap items-center justify-between gap-4">
+      <div className=" flex mx-auto flex-wrap w-[80%] bg-[#1F1F1F]">
+        {/* Left: Phone & Email */}
+      <div className="flex flex-col items-start gap-2 min-w-[180px]">
+        <div className="flex items-center gap-2">
+          <FiPhone />
+          <span>+92 3112752474</span>
         </div>
-
-        {/* Center - Offer Text */}
-        <div className="flex-1 text-center">
-          <h2 className="text-xl font-extrabold text-gray-900 leading-tight tracking-tight">
-            {currentOffer?.offerTitle || "🔥 Our Current Offers!"}
-          </h2>
-          <p className="mt-1 text-gray-600 text-sm md:text-base max-w-xl mx-auto">
-            {currentOffer?.offerText || "Get up to 50% off on your first purchase."}
-          </p>
-        </div>
-
-        {/* Right */}
-        <div className="min-w-[150px] text-right text-gray-500 font-medium text-sm md:text-base">
-          Premium Lab Equipments
+        <div className="flex items-center gap-2">
+          <FiMail />
+          <span>labzkit@gmail.com</span>
         </div>
       </div>
 
-      
+      {/* Center: Dynamic Offer */}
+      <div className="flex-1 text-center">
+        <h2 className="font-semibold text-base md:text-lg">
+          {currentOffer?.offerTitle || "Welcome to Our Store!"}
+        </h2>
+        <p className="text-yellow-500 font-semibold">
+          {currentOffer?.offerText || "Explore our premium accessories."}
+        </p>
+
+      </div>
+
+      {/* Right: Social Icons */}
+      <div className="flex items-center gap-4 min-w-[100px] justify-end">
+        <a href="https://www.facebook.com/people/LabzKit/61568475466063" target="_blank" aria-label="Facebook">
+          <FaFacebookF className="hover:text-blue-500 transition" size={20} />
+        </a>
+        <a href="https://www.instagram.com/labzkit/" target="_blank" aria-label="Instagram">
+          <FaInstagram className="hover:text-pink-500 transition" size={20} />
+        </a>
+      </div>
+      </div>
     </div>
   );
 };

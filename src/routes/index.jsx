@@ -20,7 +20,9 @@ import ContactUs from "../pages/contact-us";
 import { useUser } from "../context/UserContext";
 import ForgotPassword from "../pages/forgot-password";
 import ResetPassword from "../pages/reset-password";
-
+import TermsAndConditions from "../components/Terms&Conditions";
+import ReturnPolicy from "../components/ReturnPolicy";
+import ShippingPolicy from "../components/ShippingPolicy";
 const AppRouter = () => {
   const location = useLocation();
   const { user, token } = useUser();
@@ -35,6 +37,9 @@ const AppRouter = () => {
         <Route path="/" element={<HomePage />} />
         <Route path="/about-us" element={<AboutUS />} />
         <Route path="/contact-us" element={<ContactUs />} />
+        <Route path="/shipping-policy" element={<ShippingPolicy/>} />
+        <Route path="/return-policy" element={<ReturnPolicy/>} />
+        <Route path="/terms-and-conditions" element={<TermsAndConditions />} />
         <Route
           path="/login"
           element={<Login />}

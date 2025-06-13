@@ -82,14 +82,14 @@ const ProductsPage = () => {
     <div className="bg-white min-h-screen">
       {/* Hero Section with Breadcrumb */}
       <div className="bg-gradient-to-r from-white to-orange-50 py-8">
-        <div className="p-1">
+        {/* <div className="p-1">
           <BannerOffer
             title="🎉 Summer Sale!"
             subtitle="Enjoy up to 70% OFF."
           // buttonText="Browse Deals"
           // onClick={() => window.location.href = '/shop'}
           />
-        </div>
+        </div> */}
         <div className="container mx-auto px-4">
           <div className="flex items-center text-sm text-gray-600 mb-4">
             <span>Home</span>

@@ -45,6 +45,35 @@ const Footer = () => {
             </li>
           </ul>
         </div>
+        <div>
+          <h3 className="text-sm font-semibold mb-4">Helps</h3>
+          <ul className="space-y-2">
+            <li>
+              <NavLink
+                to="/shipping-policy"
+                className="hover:underline transition-all duration-300"
+              >
+                Shipping Policy
+              </NavLink>
+            </li>
+            <li>
+              <NavLink
+                to="/return-policy"
+                className="hover:underline transition-all duration-300"
+              >
+                Return Policy
+              </NavLink>
+            </li>
+            <li>
+              <NavLink
+                to="/terms-and-conditions"
+                className="hover:underline transition-all duration-300"
+              >
+                Terms & Conditions
+              </NavLink>
+            </li>
+          </ul>
+        </div>
 
         {/* Categories */}
         <div>
@@ -98,7 +127,7 @@ const Footer = () => {
       </div>
 
       {/* Payment Icons */}
-      <div className="flex justify-end md:space-x-6 space-x-4 my-2">
+      <div className="flex justify-center md:space-x-6 space-x-4 my-2">
         <img src={Amex} className="h-8 w-8" alt="Amex" />
         <img src={Discover} className="h-8 w-8" alt="Discover" />
         <img src={Mastercard} className="h-8 w-8" alt="Mastercard" />

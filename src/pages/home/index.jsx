@@ -5,7 +5,7 @@ import OfferCrousel from "../../components/OfferCrousel";
 import SearchInput from "../../components/Search";
 import Loader from "../../components/Loader";
 import OrderCountDisplay from "../../components/OrderCoutDisplay";
-
+import BannerOffer from "../../components/BannerOffer";
 // Enhanced category box with hover effects and new styling
 const EnhancedCategoryBox = ({ id, name, imageUrl }) => {
   return (
@@ -44,12 +44,12 @@ const HomePage = () => {
     setIsLoading(false);
   };
 
-  
+
   const fetchImages = async () => {
     const response = await getImages();
 
     setImages(response?.images);
-    
+
   };
 
   useEffect(() => {
@@ -61,13 +61,14 @@ const HomePage = () => {
     const delayDebounceFn = setTimeout(() => {
       fetchCategories(searchTerm);
     }, 300);
-    
+
     return () => clearTimeout(delayDebounceFn);
   }, [searchTerm]);
-  
+
   return (
     <div className="bg-white">
       {/* Hero Section */}
+
       <div className="bg-gradient-to-r from-white to-orange-50 pt-8 pb-16">
         <div className="container mx-auto px-4 md:px-8 lg:px-16">
           <div className="flex flex-col md:flex-row items-center gap-8 md:gap-12">
@@ -111,7 +112,6 @@ const HomePage = () => {
           </div>
         </div>
       </div>
-
       {/* Stats Bar */}
       <div className="bg-[#fc8a49] py-4">
         <div className="container mx-auto px-4">

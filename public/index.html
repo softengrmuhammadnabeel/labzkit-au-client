@@ -1,43 +1,77 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
+    <!-- ✅ JSON-LD Developer Schema (inside <head>) -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "name": "MD NABEEL",
+      "email": "se.muhammadnabeel@gmail.com",
+      "telephone": "+92 312 33 72360",
+      "sameAs": [
+        "https://www.linkedin.com/in/softengrmuhammadnabeel/",
+        "https://wa.me/923123372360"
+      ],
+      "jobTitle": "Software Engineer",
+      "worksFor": {
+        "@type": "Organization",
+        "name": "Freelance Developer"
+      }
+    }
+    </script>
+
     <meta charset="utf-8" />
     <link rel="icon" href="%PUBLIC_URL%/uniformly-logo.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#000000" />
-    <meta
-      name="description"
-      content="Web site created using create-react-app"
-    />
-    <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
-    <!--
-      manifest.json provides metadata used when your web app is installed on a
-      user's mobile device or desktop. See https://developers.google.com/web/fundamentals/web-app-manifest/
-    -->
-    <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
-    <!--
-      Notice the use of %PUBLIC_URL% in the tags above.
-      It will be replaced with the URL of the `public` folder during the build.
-      Only files inside the `public` folder can be referenced from the HTML.
 
-      Unlike "/favicon.ico" or "favicon.ico", "%PUBLIC_URL%/favicon.ico" will
-      work correctly both with client-side routing and a non-root public URL.
-      Learn how to configure a non-root public URL by running `npm run build`.
-    -->
-    <title>Labzkit</title>
+    <!-- Basic SEO -->
+    <title>Labzkit | Premium Lab Equipment for Australian Scientists</title>
+    <meta name="description"
+      content="Discover top-quality lab tools, from microscopes to precise instruments, designed for all your scientific needs in Australia." />
+    <meta name="keywords"
+      content="Labzkit, lab equipment Australia, scientific instruments, microscopes, lab tools, precision instruments, scientific tools" />
+    <meta name="author" content="Labzkit" />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://labzkit.com/" />
+    <meta property="og:title" content="Labzkit | Premium Lab Equipment for Australian Scientists" />
+    <meta property="og:description"
+      content="Explore high-quality lab tools and scientific equipment tailored for Australia's science professionals." />
+    <meta property="og:image" content="%PUBLIC_URL%/og-image.jpg" />
+    <meta property="og:site_name" content="Labzkit" />
+    <meta property="og:locale" content="en_AU" />
+    <meta property="og:see_also" content="https://www.facebook.com/people/LabzKit/61568475466063" />
+    <meta property="og:see_also" content="https://www.instagram.com/labzkit/" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:url" content="https://labzkit.com/" />
+    <meta name="twitter:title" content="Labzkit | Premium Lab Equipment for Australian Scientists" />
+    <meta name="twitter:description"
+      content="Top-notch lab instruments, precision tools, and scientific gear available in Australia." />
+    <meta name="twitter:image" content="%PUBLIC_URL%/og-image.jpg" />
+
+    <!-- Robots and Crawlers -->
+    <meta name="robots" content="index, follow" />
+    <meta name="googlebot" content="index, follow" />
+
+    <!-- Apple & PWA -->
+    <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
+    <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+
+    <!-- Developer Credit -->
+    <meta name="developer" content="MD NABEEL" />
+    <meta name="developer-email" content="se.muhammadnabeel@gmail.com" />
+    <meta name="developer-profile" content="https://www.linkedin.com/in/softengrmuhammadnabeel/" />
+    <meta name="developer-phone" content="+92 312 33 72360" />
+    <meta name="developer-whatsapp" content="https://wa.me/923123372360" />
   </head>
+
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root"></div>
-    <!--
-      This HTML file is a template.
-      If you open it directly in the browser, you will see an empty page.
-
-      You can add webfonts, meta tags, or analytics to this file.
-      The build step will place the bundled scripts into the <body> tag.
-
-      To begin the development, run `npm start` or `yarn start`.
-      To create a production bundle, use `npm run build` or `yarn build`.
-    -->
   </body>
 </html>
