@@ -121,8 +121,8 @@ const Footer = () => {
       <div className="mt-12 text-center text-gray-500 text-sm space-y-1">
         <p>&copy; {new Date().getFullYear()} <span className="font-medium text-gray-600">LabzKit</span>. All rights reserved.</p>
         <p>
-          <span className="text-gray-400">Development by</span>{' '}
-          <a href="https://www.linkedin.com/in/softengrmuhammadnabeel/" target="_blank" className="text-[#fc8a49] font-semibold tracking-wide">MD Nabeel</a>
+          <span className="text-gray-400">Develop by</span>{' '}
+          <a href="https://www.linkedin.com/company/qloudix/" target="_blank" className="text-[#fc8a49] font-semibold tracking-wide">Qloudix</a>
         </p>
       </div>
 
