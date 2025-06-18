@@ -14,7 +14,7 @@ export const getProducts = async (
     });
     return response.data;
   } catch (error) {
-    toast.error("Error fetching products");
+    // toast.error("Error fetching products");
   }
 };
 
@@ -29,7 +29,7 @@ export const getProductsByCategory = async (
     });
     return response.data;
   } catch (error) {
-    toast.error("Error fetching products by category");
+    // toast.error("Error fetching products by category");
   }
 };
 // Get product by ID
@@ -38,7 +38,7 @@ export const getProductById = async (productId) => {
     const response = await axios.get(`/products/${productId}`);
     return response.data;
   } catch (error) {
-    toast.error("Error fetching product by ID");
+    // toast.error("Error fetching product by ID");
   }
 };
 

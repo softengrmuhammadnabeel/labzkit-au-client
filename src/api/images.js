@@ -8,7 +8,7 @@ export const getImages = async () => {
     return response.data;
 
   } catch (error) {
-    toast.error("Error fetching images");
+    // toast.error("Error fetching images");
     throw error;
   }
 };

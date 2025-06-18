@@ -104,7 +104,7 @@ const ProductDetail = ({ product }) => {
       const response = await getReviews(product?._id);
       setReviews(response?.data?.reviews);
     } catch (err) {
-      toast.error("Error fetching reviews");
+      // toast.error("Error fetching reviews");
     } finally {
       setReviewsLoading(false);
     }

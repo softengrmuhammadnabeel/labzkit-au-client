@@ -59,7 +59,7 @@ function ProductUpdateModal({ productId, onClose, onSave }) {
           }
         }
       } catch (error) {
-        toast.error("Error fetching data");
+        // toast.error("Error fetching data");
       }
     };
     fetchData();

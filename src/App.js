@@ -5,11 +5,14 @@ import AppRouter from "./routes";
 import "react-toastify/dist/ReactToastify.css";
 import { UserProvider } from "./context/UserContext";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
+import ScrollToTop from "./components/ScrollToTop";
 
 function App() {
   const theme = createTheme();
   return (
     <div className="App ">
+      <ScrollToTop />
+
       <ThemeProvider theme={theme}>
         <CartProvider>
           <UserProvider>
@@ -23,7 +26,7 @@ function App() {
         hideProgressBar={false}
         newestOnTop
         closeButton
-        style={{ fontSize: "12px" }} 
+        style={{ fontSize: "12px" }}
       />
     </div>
   );
