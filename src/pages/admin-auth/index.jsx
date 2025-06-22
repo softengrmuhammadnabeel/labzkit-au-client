@@ -7,13 +7,9 @@ const AdminLogin = () => {
   const navigate = useNavigate();
 
   const handleLogin = () => {
-    // console.log("ENV:", process.env);
-
-    // console.log(process.env.REACT_APP_USER_EMAIL);
-    // console.log(process.env.REACT_APP_USER_PASSWORD);
     if (username === process.env.REACT_APP_USER_EMAIL && password === process.env.REACT_APP_USER_PASSWORD) {
-      localStorage.setItem("isAdmin", "true"); 
-      navigate("/admin/products"); 
+      localStorage.setItem("isAdmin", "true");
+      navigate("/admin/products");
     } else {
       alert("Invalid credentials");
     }

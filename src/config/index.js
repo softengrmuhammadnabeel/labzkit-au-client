@@ -1,3 +1,4 @@
+
 export const config = {
   endpoint:
     process.env.REACT_APP_MODE === "development"

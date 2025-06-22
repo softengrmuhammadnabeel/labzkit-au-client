@@ -122,7 +122,7 @@ const Footer = () => {
         <p>&copy; {new Date().getFullYear()} <span className="font-medium text-gray-600">LabzKit</span>. All rights reserved.</p>
         <p>
           <span className="text-gray-400">Develop by</span>{' '}
-          <a href="https://www.linkedin.com/company/qloudix/" target="_blank" className="text-[#fc8a49] font-semibold tracking-wide">Qloudix</a>
+          <a href="https://www.qloudix.com/" target="_blank" className="text-[#fc8a49] font-semibold tracking-wide">Qloudix</a>
         </p>
       </div>
 
