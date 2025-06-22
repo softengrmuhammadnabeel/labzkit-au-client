@@ -46,7 +46,10 @@ export const getProductById = async (productId) => {
 export const createProduct = async (productData) => {
   try {
     const response = await axios.post("/products", productData);
-    return response.data;
+    if (response.data) {
+
+      return true;
+    }
   } catch (error) {
     toast.error("Error creating product");
   }

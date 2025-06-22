@@ -14,8 +14,14 @@ export const registerUser = async (userData) => {
 // Login user
 export const loginUser = async (credentials) => {
   try {
-    const response = await axios.post("/users/login", credentials);
-    return response.data;
+    
+    if (credentials.username === process.env.REACT_APP_USER_EMAIL && credentials.password === process.env.REACT_APP_USER_PASSWORD) {
+      localStorage.setItem("isAdmin", "true");
+      // navigate("/admin/products");
+    } else {
+      alert("Invalid credentials");
+    }
+    return true
   } catch (error) {
     console.error("Error logging in:", error);
     throw error;

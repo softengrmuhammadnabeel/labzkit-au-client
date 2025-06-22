@@ -8,7 +8,7 @@ export const getAllOffers = async () => {
 
 // Create a new offer
 export const createOffer = async (offerText) => {
-    const response = await axios.post("/offer", { offerText });
+    const response = await axios.post("/offer", offerText );
     return response.data;
 };
 

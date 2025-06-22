@@ -173,11 +173,13 @@ const ProductCreate = () => {
     }
     setIsLoading(true);
     try {
-      // const createdProduct = await createProduct(formData);
-      setProduct({});
-      setProductImageFiles([]);
-      toast.success("Product Created Successfully");
-      navigate("/admin/products");
+      const createdProduct = await createProduct(formData);
+      // setProduct({});
+      // setProductImageFiles([]);
+      if (createdProduct) {
+        toast.success("Product Created Successfully");
+        navigate("/admin/products");
+      }
     } catch (error) {
       toast.error("Product creation failed");
     } finally {
@@ -264,11 +266,10 @@ const ProductCreate = () => {
         <div className="mt-8 flex justify-center">
           <button
             type="submit"
-            className={`w-full py-2 px-4 rounded-md focus:outline-none transition-all duration-300 ease-in-out ${
-              isLoading
+            className={`w-full py-2 px-4 rounded-md focus:outline-none transition-all duration-300 ease-in-out ${isLoading
                 ? "bg-gray-400 cursor-not-allowed"
                 : "bg-blue-600 text-white hover:bg-blue-700 dark:bg-blue-600 dark:hover:bg-blue-700"
-            }`}
+              }`}
             disabled={isLoading}
           >
             {isProductForm
@@ -276,8 +277,8 @@ const ProductCreate = () => {
                 ? "Creating Product..."
                 : "Create Product"
               : isLoading
-              ? "Creating Category..."
-              : "Create Category"}
+                ? "Creating Category..."
+                : "Create Category"}
           </button>
         </div>
       </form>
