@@ -38,7 +38,7 @@ export const getProductById = async (productId) => {
     const response = await axios.get(`/products/${productId}`);
     return response.data;
   } catch (error) {
-    // toast.error("Error fetching product by ID");
+    toast.error("Error fetching product by ID");
   }
 };
 
@@ -71,5 +71,17 @@ export const deleteProduct = async (productId) => {
     return response.data;
   } catch (error) {
     toast.error("Error deleting product");
+  }
+};
+export const deleteProductImage = async (productId, imagesToDelete) => {
+  try {
+    const response = await axios.delete(`/products/${productId}/images`, {
+      data: { imagesToDelete },
+    });
+    toast.success("Image deleted successfully!");
+    return response.data.updatedProduct; // Return updated product
+  } catch (error) {
+    toast.error("Error deleting image.");
+    console.error("Error:", error);
   }
 };

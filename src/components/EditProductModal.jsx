@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { getProductById } from "../api/products";
+import { getProductById, deleteProductImage } from "../api/products";
 import { getCategories } from "../api/categories";
 import {
   availableSizes,
@@ -39,6 +39,9 @@ function ProductUpdateModal({ productId, onClose, onSave }) {
     description: "",
   });
   const [fileList, setFileList] = useState([]); // To store selected files
+  const [existingImages, setExistingImages] = useState([]); // To track existing images
+  const [removedImages, setRemovedImages] = useState([]); // To track removed existing images
+
   // Fetch product and category data
   useEffect(() => {
     const fetchData = async () => {
@@ -46,20 +49,26 @@ function ProductUpdateModal({ productId, onClose, onSave }) {
         const response = await getProductById(productId);
         if (response) {
           setProductData({ ...response, category: response?.category?._id });
-          if (response.images) {
-            setFileList(
-              response.images.map((image, index) => ({
-                uid: `image-${Date.now()}-${index}`, // Ensure unique UID for each image
-                name: image.name,
-                status: "done",
-                url: getImageUrl(image),
-                originFileObj: image, // Store the original image data
-              }))
-            );
+
+          // Filter out null values and create proper file list structure
+          if (response.images && Array.isArray(response.images)) {
+            const validImages = response.images.filter(image => image !== null && image !== undefined && image !== '');
+
+            const existingImageFiles = validImages.map((imageUrl, index) => ({
+              uid: `existing-${Date.now()}-${index}`,
+              name: `existing-image-${index + 1}`,
+              status: "done",
+              url: imageUrl,
+              isExisting: true, // Flag to identify existing images
+              originalUrl: imageUrl, // Store original URL for backend reference
+            }));
+
+            setFileList(existingImageFiles);
+            setExistingImages(validImages); // Keep track of original existing images
           }
         }
       } catch (error) {
-        // toast.error("Error fetching data");
+        toast.error("Error fetching data");
       }
     };
     fetchData();
@@ -93,7 +102,7 @@ function ProductUpdateModal({ productId, onClose, onSave }) {
   };
 
   const fetchCategories = async () => {
-    await getCategories().then((res) => {
+    const response = await getCategories().then((res) => {
       let data = res.map((elem) => ({
         label: elem?.name,
         value: elem?._id,
@@ -108,31 +117,62 @@ function ProductUpdateModal({ productId, onClose, onSave }) {
 
   const handleFileChange = (e) => {
     const newFiles = Array.from(e.target.files).map((file, index) => ({
-      uid: `file-${Date.now()}-${index}`, // Ensure unique UID for each new file
+      uid: `new-${Date.now()}-${index}`, // Different prefix for new files
       name: file.name,
       status: "done",
       url: URL.createObjectURL(file), // Temporary URL for preview
       originFileObj: file, // Store the original file object
+      isExisting: false, // Flag to identify new files
     }));
+    const validExistingImages = existingImages.filter(
+      (image) => !removedImages.includes(image)
+    );
+
+    // Calculate the total images after adding new files
+    const totalImages = validExistingImages.length + newFiles.length;
+
 
     // Check the number of files after adding new ones
-    if (fileList.length + newFiles.length <= 5) {
+    if (totalImages <= 5) {
       setFileList((prevList) => [...prevList, ...newFiles]);
     } else {
       toast.error("You can upload a maximum of 5 images.");
     }
   };
 
-  // To handle removal of files properly:
-  const handleRemoveImage = (file) => {
-    setFileList((prevList) => prevList.filter((elem) => elem.uid !== file.uid)); // Only remove the clicked file by UID
+  // Handle removal of images
+  const handleRemoveImage = async (file) => {
+    try {
+      if (file.isExisting) {
+        // If it's an existing image, call the backend API to delete it
+        const updatedProduct = await deleteProductImage(productId, file.originalUrl);
+
+        // Update the product's images in local state
+        // setProductImages(updatedProduct.images);
+
+        // Optionally add to removed list (if needed for tracking purposes)
+        setRemovedImages((prev) => [...prev, file.originalUrl]);
+        setFileList((prevList) => prevList.filter((elem) => elem.uid !== file.uid));
+
+        toast.success("Image removed successfully!");
+      } else {
+        // If it's a newly added image (not yet uploaded to the backend), just remove it from the file list
+        setFileList((prevList) => prevList.filter((elem) => elem.uid !== file.uid));
+        toast.success("Image removed locally!");
+      }
+    } catch (error) {
+      console.error("Error removing image:", error.message);
+      toast.error("Failed to remove the image.");
+    }
   };
+
   const handleDescriptionChange = (value) => {
     setProductData((prevData) => ({
       ...prevData,
       description: value, // Update description field with the HTML content
     }));
   };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!productData.name) {
@@ -183,7 +223,6 @@ function ProductUpdateModal({ productId, onClose, onSave }) {
       toast.error("Product description is required");
       return;
     }
-    
 
     const formData = new FormData();
     formData.append("name", productData.name);
@@ -195,13 +234,17 @@ function ProductUpdateModal({ productId, onClose, onSave }) {
     formData.append("color", JSON.stringify(productData.color));
     formData.append("gender", productData.gender);
     formData.append("description", productData.description);
-    if (fileList.length > 0) {
-      fileList.forEach((file) => {
+
+    // Handle images - only send new images
+    const newFiles = fileList.filter(file => !file.isExisting && file.originFileObj);
+
+    // Append only new image files as "images" to match backend expectation
+    if (newFiles.length > 0) {
+      newFiles.forEach((file) => {
         formData.append("images", file.originFileObj);
       });
-    } else {
-      formData.append("images", JSON.stringify([]));
     }
+    // Don't send anything for images if no new files - let backend handle existing images
 
     setIsLoading(true);
     try {
@@ -212,6 +255,7 @@ function ProductUpdateModal({ productId, onClose, onSave }) {
       setIsLoading(false);
     }
   };
+
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-gray-500 bg-opacity-50 z-50 py-6">
       <div className="bg-white p-6 shadow-lg w-full rounded-xl max-w-2xl max-h-[80vh] overflow-auto sm:w-3/4">
@@ -230,23 +274,30 @@ function ProductUpdateModal({ productId, onClose, onSave }) {
               id="file-upload"
             />
             <Button variant="contained" component="label" htmlFor="file-upload">
-              Upload Images
+              Upload Images ({fileList.length}/5)
             </Button>
-            <Box display="flex" gap={2} mt={2}>
+            <Box display="flex" flexWrap="wrap" gap={2} mt={2}>
               {fileList.map((file) => (
                 <Box
                   key={file.uid}
                   position="relative"
                   width="100px"
                   height="100px"
+                  border="1px solid #ddd"
+                  borderRadius="4px"
+                  overflow="hidden"
                 >
                   <img
-                    src={file.originFileObj}
+                    src={file.url}
                     alt={file.name}
                     style={{
                       width: "100%",
                       height: "100%",
                       objectFit: "cover",
+                    }}
+                    onError={(e) => {
+                      console.error("Image load error:", file);
+                      e.target.style.display = 'none';
                     }}
                   />
                   <IconButton
@@ -256,11 +307,27 @@ function ProductUpdateModal({ productId, onClose, onSave }) {
                       position: "absolute",
                       top: 2,
                       right: 2,
-                      backgroundColor: "rgba(255, 255, 255, 0.8)",
+                      backgroundColor: "rgba(255, 0, 0, 0.7)",
+                      color: "white",
                     }}
                   >
                     <DeleteIcon fontSize="small" />
                   </IconButton>
+                  {file.isExisting && (
+                    <Box
+                      position="absolute"
+                      bottom={0}
+                      left={0}
+                      right={0}
+                      bgcolor="rgba(0, 0, 0, 0.6)"
+                      color="white"
+                      fontSize="10px"
+                      textAlign="center"
+                      p={0.5}
+                    >
+                      Existing
+                    </Box>
+                  )}
                 </Box>
               ))}
             </Box>
@@ -380,6 +447,7 @@ function ProductUpdateModal({ productId, onClose, onSave }) {
             onChange={(value) => handleDescriptionChange(value)}
             style={{ height: "150px", marginBottom: "1em" }}
           />
+
           {/* Actions */}
           <Box display="flex" justifyContent="space-between" mt={8}>
             <Button variant="outlined" color="gray" onClick={handleCancel}>
