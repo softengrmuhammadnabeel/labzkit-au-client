@@ -14,9 +14,17 @@ export const registerUser = async (userData) => {
 // Login user
 export const loginUser = async (credentials) => {
   try {
-    
+    console.log(process.env.REACT_APP_USER_EMAIL)
+    console.log(credentials.username)
+    console.log(process.env.REACT_APP_USER_PASSWORD)
+    console.log(credentials.password)
     if (credentials.username === process.env.REACT_APP_USER_EMAIL && credentials.password === process.env.REACT_APP_USER_PASSWORD) {
       localStorage.setItem("isAdmin", "true");
+      console.log("------>>------")
+      console.log(process.env.REACT_APP_USER_EMAIL)
+    console.log(credentials.username)
+    console.log(process.env.REACT_APP_USER_PASSWORD)
+    console.log(credentials.password)
       // navigate("/admin/products");
     } else {
       alert("Invalid credentials");
