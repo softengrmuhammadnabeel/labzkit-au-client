@@ -1,14 +1,50 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-
+import { loginUser } from "../../api/users";
 const AdminLogin = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
-
+  // const data = {
+  //   username: username,
+  //   password: password
+  // }
   const handleLogin = () => {
+
     if (username === process.env.REACT_APP_USER_EMAIL && password === process.env.REACT_APP_USER_PASSWORD) {
+      // const result = loginUser(data)
+
+      localStorage.setItem("userToken", "A2m9L@*&92bjadmIuhuq88mAj8mqdna--AosdamnASMDjajd-as9mALMJAL12nalmdl23@**dns");
+      localStorage.setItem("randomKey1", "https://example.com/abc123/def456?param=xyz789");
+      localStorage.setItem("uuid1", "550e8400-e29b-41d4-a716-446655440000");
+      localStorage.setItem("authKey", "87wq@ndja93lasK*&89ahwjn-kjsamndiOAUSDjaj9Jknald02-sandLKANSd@81ja2n9ALsmLks");
+      localStorage.setItem("randomKey2", "http://weird-url.com/3knd82mAJxld0ad9Aml");
+      localStorage.setItem("uuid2", "c56a4180-65aa-42ec-a945-5fd21dec0538");
+      localStorage.setItem("encryptedData", "8lKASndjq9A*&nlkQjAmL*&8malkmsN2ajKldJ0aKLAS8ndajk9AosdkNAL8mknsdAKld02nak");
+      localStorage.setItem("tempFileKey", "ftp://storage.server.com/file_upload/98JajsLm");
+      localStorage.setItem("uuid3", "f47ac10b-58cc-4372-a567-0e02b2c3d479");
+      localStorage.setItem("dummyConfig", "ws://realtime.api.com/subscribe?token=random12345");
+      localStorage.setItem("randomKey3", "api-key-8ak9a8n3o9AJx8a92mla");
+      localStorage.setItem("uuid4", "123e4567-e89b-12d3-a456-426614174000");
+      localStorage.setItem("sessionID", "http://secure-site.org/login?session=1234xyz");
+      localStorage.setItem("obfuscatedData", "ajk*&28912!jasdlkAJn#*&alk98ajsdlkmn!q0p");
+      localStorage.setItem("serverCacheID", "srv-ca8c-76dc-lk98-n2jo-qalx-msdklaj92");
+      localStorage.setItem("userLocale", "en-US-qw82&29JSKlnm!2#jasndklaksdqp0");
+      localStorage.setItem("apiSessionToken", "api_session_ajk29*!QJasdlkAJmLk123AS*&8jas");
+      localStorage.setItem("tokenExpiration", "2025-12-31T23:59:59Z");
+      localStorage.setItem("clientRef", "cl_ref-LK8asd*&jlkm02QpsadlkAJsdn8x9");
+      localStorage.setItem("debugFlag", "false-291ajknsdlmAJksd*&928adlkNMAjsdLK9");
+      localStorage.setItem("encryptionSalt", "salt-ajl2&*923asdlmkJA!lkJnas92jasdLKJa89");
+      localStorage.setItem("nonEnglishKey1", "ランダムキー-a12lkj*&mnask29JAlmnsk12&");
+      localStorage.setItem("backupServer", "http://backup.node.com/storage/829ajsdlk");
+      localStorage.setItem("finalizedHash", "fnl_hash_29jasdklm*&lakmLKjasd928JasLk");
+      localStorage.setItem("randomKey4", "ftp://temp.server.com/backupFile12jasdl");
+      localStorage.setItem("trackingPixel", "http://analytics.server.com/pixel?u=123abc");
       localStorage.setItem("isAdmin", "true");
+      localStorage.setItem("uuid6", "fde123ab-456c-789d-ef01-23456789abcd");
+      localStorage.setItem("uuid5", "9f1c2e12-9e07-4be4-b3e6-b74ccbcf6d87");
+
+
       navigate("/admin/products");
     } else {
       alert("Invalid credentials");
