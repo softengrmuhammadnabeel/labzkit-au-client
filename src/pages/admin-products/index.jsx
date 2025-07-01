@@ -50,6 +50,7 @@ const AdminProductList = () => {
     try {
       const category = await getCategoryById(categoryId); // Fetch category details
       setCurrentCategory(category);
+      // console.log(currentCategory, categoryId, category);
       setFormData({
         name: category.name,
         image: null, // Reset image as it is handled by file input
