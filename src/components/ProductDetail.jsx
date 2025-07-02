@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { useCart } from "../context/CartContext";
-import {  imagesProduct } from "../utils/functions";
+import { imagesProduct } from "../utils/functions";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import ReviewForm from "./ReviewForm";
@@ -15,12 +15,12 @@ import Lightbox from "yet-another-react-lightbox";
 import "yet-another-react-lightbox/styles.css";
 
 // Icons
-import { 
-  ShoppingCart, 
-  PlusCircle, 
-  MinusCircle, 
-  ChevronRight, 
-  MessageSquare, 
+import {
+  ShoppingCart,
+  PlusCircle,
+  MinusCircle,
+  ChevronRight,
+  MessageSquare,
   RefreshCw,
 } from "lucide-react";
 
@@ -94,9 +94,18 @@ const ProductDetail = ({ product }) => {
   };
 
   const openLightbox = (index) => {
-    setPhotoIndex(index);
-    setIsOpen(true);
+    if (photoIndex === index && isOpen) {
+      setIsOpen(false); // Close first
+      setTimeout(() => {
+        setPhotoIndex(index);
+        setIsOpen(true); // Reopen
+      }, 50);
+    } else {
+      setPhotoIndex(index);
+      setIsOpen(true);
+    }
   };
+
 
   const fetchReviews = useCallback(async () => {
     setReviewsLoading(true);
@@ -168,7 +177,7 @@ const ProductDetail = ({ product }) => {
                       alt={product?.name}
                       className="w-full h-auto rounded-lg shadow-md object-contain max-h-96"
                     />
-                    
+
                     {product?.discountedPrice > 0 && (
                       <div className="absolute top-4 left-4 bg-[#fc8a49] text-white px-3 py-1 rounded-full text-sm font-semibold">
                         {Math.round(((product.price - product.discountedPrice) / product.price) * 100)}% OFF
@@ -176,16 +185,15 @@ const ProductDetail = ({ product }) => {
                     )}
                   </div>
                 </div>
-                
+
                 <div className="flex flex-wrap justify-center gap-3 mt-4">
                   {product?.images?.map((image, index) => (
-                    <div 
+                    <div
                       key={index}
-                      className={`cursor-pointer transition-all duration-300 ${
-                        photoIndex === index 
-                          ? "ring-2 ring-[#fc8a49] scale-105" 
-                          : "ring-1 ring-gray-200 hover:ring-[#fc8a49]/50"
-                      }`}
+                      className={`cursor-pointer transition-all duration-300 ${photoIndex === index
+                        ? "ring-2 ring-[#fc8a49] scale-105"
+                        : "ring-1 ring-gray-200 hover:ring-[#fc8a49]/50"
+                        }`}
                       onClick={() => openLightbox(index)}
                     >
                       <img
@@ -263,11 +271,10 @@ const ProductDetail = ({ product }) => {
                   {product?.size?.map((size) => (
                     <button
                       key={size}
-                      className={`h-10 min-w-16 px-3 rounded-md border transition-all duration-200 ${
-                        selectedSize === size
-                          ? "border-[#fc8a49] bg-[#fc8a49]/10 text-[#fc8a49] font-medium"
-                          : "border-gray-300 text-gray-700 hover:border-[#fc8a49]/50"
-                      }`}
+                      className={`h-10 min-w-16 px-3 rounded-md border transition-all duration-200 ${selectedSize === size
+                        ? "border-[#fc8a49] bg-[#fc8a49]/10 text-[#fc8a49] font-medium"
+                        : "border-gray-300 text-gray-700 hover:border-[#fc8a49]/50"
+                        }`}
                       onClick={() => setSelectedSize(size)}
                     >
                       {size}
@@ -283,11 +290,10 @@ const ProductDetail = ({ product }) => {
                   {product?.color?.map((color) => (
                     <div
                       key={color}
-                      className={`w-8 h-8 rounded-full cursor-pointer transition-all duration-200 border-2 ${
-                        selectedColor === color
-                          ? "ring-2 ring-offset-2 ring-[#fc8a49] scale-110"
-                          : "border-gray-300 hover:border-gray-400"
-                      }`}
+                      className={`w-8 h-8 rounded-full cursor-pointer transition-all duration-200 border-2 ${selectedColor === color
+                        ? "ring-2 ring-offset-2 ring-[#fc8a49] scale-110"
+                        : "border-gray-300 hover:border-gray-400"
+                        }`}
                       style={{ backgroundColor: color }}
                       onClick={() => setSelectedColor(color)}
                     />
@@ -334,16 +340,15 @@ const ProductDetail = ({ product }) => {
                 <button
                   onClick={handleAddToCart}
                   disabled={!selectedSize || !selectedColor || quantity < 1 || product?.quantity <= 0}
-                  className={`flex items-center justify-center gap-2 w-full py-3 px-6 rounded-lg transition-all duration-300 ${
-                    !selectedSize || !selectedColor || quantity < 1 || product?.quantity <= 0
-                      ? "bg-gray-300 cursor-not-allowed text-gray-600"
-                      : "bg-[#fc8a49] hover:bg-[#e67b3f] text-white"
-                  }`}
+                  className={`flex items-center justify-center gap-2 w-full py-3 px-6 rounded-lg transition-all duration-300 ${!selectedSize || !selectedColor || quantity < 1 || product?.quantity <= 0
+                    ? "bg-gray-300 cursor-not-allowed text-gray-600"
+                    : "bg-[#fc8a49] hover:bg-[#e67b3f] text-white"
+                    }`}
                 >
                   <ShoppingCart className="h-5 w-5" />
                   <span className="font-semibold">Add to Cart</span>
                 </button>
-                
+
                 {user && token && !isAdmin && (
                   <button
                     onClick={() => setIsModalOpen(true)}
@@ -364,7 +369,7 @@ const ProductDetail = ({ product }) => {
                     <p className="text-sm text-gray-600">Free standard shipping on orders over $100</p>
                   </div>
                 </div>
-                
+
                 <div className="flex items-start gap-3">
                   <RefreshCw className="h-5 w-5 text-[#fc8a49] flex-shrink-0 mt-0.5" />
                   <div>
@@ -372,7 +377,7 @@ const ProductDetail = ({ product }) => {
                     <p className="text-sm text-gray-600">30-day return policy for unworn items</p>
                   </div>
                 </div>
-                
+
                 {/* <div className="flex items-start gap-3">
                   <Shield className="h-5 w-5 text-[#fc8a49] flex-shrink-0 mt-0.5" />
                   <div>
@@ -390,11 +395,10 @@ const ProductDetail = ({ product }) => {
           <div className="border-b border-gray-200">
             <nav className="flex space-x-8">
               <button
-                className={`py-4 px-1 text-center text-sm font-medium border-b-2 transition-colors duration-200 ${
-                  activeTab === "description"
-                    ? "border-[#fc8a49] text-[#fc8a49]"
-                    : "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300"
-                }`}
+                className={`py-4 px-1 text-center text-sm font-medium border-b-2 transition-colors duration-200 ${activeTab === "description"
+                  ? "border-[#fc8a49] text-[#fc8a49]"
+                  : "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300"
+                  }`}
                 onClick={() => setActiveTab("description")}
               >
                 Product Description
@@ -471,8 +475,10 @@ const ProductDetail = ({ product }) => {
           open={isOpen}
           close={() => setIsOpen(false)}
           index={photoIndex}
-          slides={product?.images?.map(img => ({ src: (img) }))}
+          slides={product?.images?.map((img) => ({ src: img }))}
+          on={{ view: ({ index }) => setPhotoIndex(index) }}
         />
+
       )}
     </div>
   );
